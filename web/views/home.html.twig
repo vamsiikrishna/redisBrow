@@ -1,0 +1,6 @@
+{% extends layout %}
+{% block body %}
+    <h1>Redis Browser</h1>
+    <p><strong>{{ dbsize }} Keys available.</strong></p>
+    {{ dump(info) }}
+{% endblock body %}
