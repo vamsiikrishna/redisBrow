@@ -1,4 +1,4 @@
-redisBrow - PHP - Silex based browser for Redis
-===============================================
+redisBrow
+=========
 
-Web application to display redis stats
+Web application to explore redis server using Silex - The PHP micro-framework

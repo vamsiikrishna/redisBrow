@@ -4,18 +4,40 @@ namespace RedisBrow\Helper;
 
 use Predis;
 
-class RedisHelper {
+/**
+ * Class RedisHelper
+ * @package RedisBrow\Helper
+ */
+class RedisHelper
+{
 
+    /**
+     * @var Predis\Client
+     */
     private $redis;
 
-    public function __construct($host,$port)
+    /**
+     * @param $host
+     * @param $port
+     */
+    public function __construct($host, $port)
     {
         $this->redis = new Predis\Client("tcp://$host:$port");
     }
-    public function info() {
+
+    /**
+     * @return array
+     */
+    public function info()
+    {
         return $this->redis->info();
     }
-    public function dbsize() {
+
+    /**
+     * @return int
+     */
+    public function dbsize()
+    {
         return $this->redis->dbsize();
     }
 }

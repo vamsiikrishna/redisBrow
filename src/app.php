@@ -10,7 +10,6 @@ use Silex\Provider\ValidatorServiceProvider;
 use Silex\Provider\SessionServiceProvider;
 
 
-
 $app = new Application();
 
 $app->register(new FormServiceProvider());
@@ -18,7 +17,7 @@ $app->register(new FormServiceProvider());
 $app->register(new TranslationServiceProvider());
 
 $app->register(new MonologServiceProvider(), [
-    'monolog.logfile' => __DIR__.'/dev.log',
+    'monolog.logfile' => __DIR__ . '/dev.log',
 ]);
 
 $app->register(new UrlGeneratorServiceProvider());
@@ -27,7 +26,7 @@ $app->register(new SessionServiceProvider());
 
 
 $app->register(new TwigServiceProvider(), [
-    'twig.path' => __DIR__.'/../web/views',
+    'twig.path' => __DIR__ . '/../web/views',
 ]);
 
 $app->register(new ValidatorServiceProvider());
@@ -37,7 +36,7 @@ $app->before(function () use ($app) {
 });
 
 
-$app['twig'] = $app->share($app->extend('twig', function($twig, $app) {
+$app['twig'] = $app->share($app->extend('twig', function ($twig, $app) {
     return $twig;
 }));
 
