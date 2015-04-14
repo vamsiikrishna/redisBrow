@@ -16,15 +16,15 @@ $app->get('/info', function () use ($app) {
 })->bind('info');
 
 $app->match('/', function (Request $request) use ($app) {
-     // some default data for when the form is displayed the first time
+
     $data = array(
         'host' => '127.0.0.1',
         'port' => '6379',
     );
 
     $form = $app['form.factory']->createBuilder('form', $data)
-        ->add('host')
-        ->add('port')
+        ->add('host','text',array('attr'=>array('class'=>'form-control')))
+        ->add('port','text',array('attr'=>array('class'=>'form-control')))
         ->getForm();
 
     $form->handleRequest($request);
