@@ -40,4 +40,14 @@ class RedisHelper
     {
         return $this->redis->dbsize();
     }
+   
+     /**
+     * @param $offset
+     * @return int
+     */
+    public function scan($offset)
+    {
+        return $this->redis->scan($offset);
+    }
+
 }

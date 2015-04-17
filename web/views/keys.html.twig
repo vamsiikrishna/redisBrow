@@ -1,0 +1,80 @@
+{% extends layout %}
+{% block body %}
+ <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/info">redisBrow</a>
+            </div>
+            <div id="navbar" class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/">Server Status</a></li>
+                    <li><a href="/keys/1">Keys</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </nav>
+{% if pagination.flag != 1 %}
+    <div role="tabpanel" class="tab-pane active" id="server">
+                   
+                        <table class="table table-condensed table-hover">
+                            <thead>
+                            <tr>
+                                <th>Key</th>
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                           {% for i in pageValueArray %}
+                         <tr><td> {{ i }}  </td></tr>
+                        {% endfor %}
+                            </tbody>
+                        </table>
+                   
+
+    </div>
+
+<nav>
+  <ul class="pagination">
+
+  {% set prev = pagination.pageid - 1 %}
+   {% set next = pagination.end  %}
+    {% set last = pagination.end - 1 %}
+     {% if pagination.pageid != 1 %}
+   <li>
+      <a href="/keys/{{prev}}" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+     {% for i in pagination.pageid..last %}
+     {% if i == pagination.pageid %}
+   <li class="active"><a href="/keys/{{i}}">{{i}} <span class="sr-only">(current)</span></a></li>
+   {% else %}
+     <li><a href="/keys/{{i}}">{{i}}</a></li>
+{% endif %}
+   
+    
+    
+    {% endfor %}
+    <li>
+      <a href="/keys/{{next}}" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+{% else %}
+   <div role="tabpanel" class="tab-pane active" id="server">
+<p>No results found</p>
+   </div>
+{% endif %}
+
+   
+{% endblock body %}

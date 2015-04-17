@@ -39,3 +39,64 @@ $app->match('/', function (Request $request) use ($app) {
     return $app['twig']->render('home.html.twig', array('form' => $form->createView()));
 
 })->bind('home');
+
+
+$app->get('/keys/{pageid}', function () use ($app) {
+
+    $server = $app['session']->get('server');
+    $host = $server['host'];
+    $port = $server['port'];
+    //$id   = $app['pageid'];
+    $pageValueArray = array();
+    $pageid = $app['request']->get('pageid');
+    $client = new RedisHelper($host, $port);
+    $flag = 0;
+
+    //$keys = $client->scan(0);
+    
+    if($pageid){
+        $start = $pageid;
+    }
+    $end = $start + 5;
+    $pageArray = array();
+    if($pageid==1){
+        $pageArray[$pageid]=0; 
+    }else {
+         $pageinfo = $app['session']->get('paginfo');
+         $pageArray[$pageid] = $pageinfo[$pageid];
+
+         if(!isset($pageArray[$pageid])){
+            $flag = 1;
+         }
+         
+    }
+
+    $scanvalue = $pageArray[$pageid];
+   // echo "<pre />";
+    //print_r ($pageArray);die(); 
+
+    $keys = $client->scan($scanvalue);
+    $pageValueArray =  $keys[1];
+    $pagination['pageid'] = $pageid;
+    $pagination['end']= $end;
+
+    $pagination['flag']= $flag;
+   
+    
+
+    // pagination code 
+    for($itr=$start;$itr<$end;$itr++){
+        $scanvalue = $pageArray[$itr];
+           $keys = $client->scan($scanvalue);
+           $pageArray[$itr+1] = $keys[0];
+    }
+
+
+    $app['session']->set('paginfo',$pageArray);
+    //var_dump($pageArray);die();
+
+    
+    return $app['twig']->render('keys.html.twig', array('pageValueArray' => $pageValueArray,'pagination'=> $pagination ));
+
+})->bind('keys');
+
